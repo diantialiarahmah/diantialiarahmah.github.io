@@ -355,6 +355,136 @@ void loop() {
     </ul>
   </div>
 </section>
+    
+ <section id="Implementasi Logic Node">
+  <h2>TAHAP IV: Implementasi Logic Node
+</h2>
+  <div class="card">
+  <ul>
+<p>1️⃣ Buka Terminal Ubuntu & Aktifkan ROS 2</p>
+<pre>source /opt/ros/jazzy/setup.bash</pre>
+<p>📌 Wajib dijalankan setiap membuka terminal baru.</p>
+<p>2️⃣ Buat ROS 2 Workspace</p>
+<pre>mkdir -p ~/incubator_ws/src
+cd ~/incubator_ws
+colcon build
+source install/setup.bash</pre>
+<p>3️⃣ Buat Package ROS 2 (Python)</p>
+<pre>cd ~/incubator_ws/srcros2 pkg create incubator_logic --build-type ament_python --dependencies rclpy std_msgs</pre>
+<p>4️⃣ Masuk ke Folder Package</p>
+<pre>cd incubator_logic/incubator_logic</pre>
+<p>5️⃣ Buat File Python Logic Node</p>
+<pre>nano logic_node.py</pre>
+<p>6️⃣ Script Python (Logic Node)</p>
+<pre>import rclpy
+from rclpy.node import Node
+from std_msgs.msg import Float32, String, Bool
+
+class IncubatorLogicNode(Node):
+
+    def __init__(self):
+        super().__init__('incubator_logic_node')
+
+        # Threshold (batas aman)
+        self.temp_min = 32.0
+        self.temp_max = 36.0
+        self.hum_min = 40.0
+        self.hum_max = 60.0
+
+        self.temperature = None
+        self.humidity = None
+
+        # Subscriber
+        self.create_subscription(
+            Float32,
+            '/incubator/temperature',
+            self.temperature_callback,
+            10
+        )
+
+        self.create_subscription(
+            Float32,
+            '/incubator/humidity',
+            self.humidity_callback,
+            10
+        )
+
+        # Publisher
+        self.status_pub = self.create_publisher(String, '/incubator/status', 10)
+        self.alarm_pub = self.create_publisher(Bool, '/incubator/alarm', 10)
+
+        self.get_logger().info("Incubator Logic Node started")
+
+    def temperature_callback(self, msg):
+        self.temperature = msg.data
+        self.evaluate_condition()
+
+    def humidity_callback(self, msg):
+        self.humidity = msg.data
+        self.evaluate_condition()
+
+    def evaluate_condition(self):
+        if self.temperature is None or self.humidity is None:
+            return
+
+        status_msg = String()
+        alarm_msg = Bool()
+
+        if (self.temperature < self.temp_min or self.temperature > self.temp_max or
+            self.humidity < self.hum_min or self.humidity > self.hum_max):
+
+            status_msg.data = "DANGER"
+            alarm_msg.data = True
+
+        else:
+            status_msg.data = "NORMAL"
+            alarm_msg.data = False
+
+        self.status_pub.publish(status_msg)
+        self.alarm_pub.publish(alarm_msg)
+
+        self.get_logger().info(
+            f"Temp: {self.temperature} | Hum: {self.humidity} | Status: {status_msg.data}"
+        )
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = IncubatorLogicNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+</pre>
+<p>Tekan:</p>
+<p>CTRL + O → ENTER → CTRL + X</p>
+<p>7️⃣ Edit setup.py agar Node Bisa Dijalankan</p>
+<pre>nano ../setup.py</pre>           
+<p>Tambahkan pada bagian entry_points:</p>
+<pre>nano ../setup.pyentry_points={
+    'console_scripts': [
+        'logic_node = incubator_logic.logic_node:main',
+    ],
+},</pre>  
+<p>8️⃣ Build Ulang Workspace</p>
+<pre>cd ~/incubator_ws
+colcon build
+source install/setup.bash</pre> 
+<p>9️⃣ Jalankan Logic Node</p>
+<pre>ros2 run incubator_logic logic_node</pre>  
+<p>Jika berhasil, akan muncul:</p>
+<pre>[INFO] Incubator Logic Node started</pre>  
+<p>🔎 1️⃣0️⃣ Uji Node (Manual dari Terminal)</p>
+<p>Kirim data suhu:</p>
+<pre>ros2 topic pub /incubator/temperature std_msgs/Float32 "{data: 37.0}"</pre> 
+<p>Kirim data kelembapan:</p>
+<pre>ros2 topic pub /incubator/humidity std_msgs/Float32 "{data: 65.0}"</pre>
+<p>Cek status:</p>
+<pre>ros2 topic echo /incubator/status</pre>
+<p>Cek alarm:</p>
+<pre>ros2 topic echo /incubator/alarm</pre>
+  </ul>
 
     
 <section id="trouble">
