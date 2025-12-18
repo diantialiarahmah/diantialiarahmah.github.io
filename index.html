@@ -121,27 +121,52 @@
   <h2>Contoh Program Arduino</h2>
   <div class="card">
 <pre>#include <DHT.h>
-#define DHTPIN 2
+
+#define DHTPIN 2        // Pin DATA DHT11
 #define DHTTYPE DHT11
-#define BUZZER 8
+#define BUZZER 8        // Pin buzzer
 
 DHT dht(DHTPIN, DHTTYPE);
 
-void setup(){
+void setup() {
   Serial.begin(9600);
   dht.begin();
   pinMode(BUZZER, OUTPUT);
+
+  Serial.println("=== Monitoring Inkubator Bayi ===");
 }
 
-void loop(){
-  float h = dht.readHumidity();
-  float t = dht.readTemperature();
+void loop() {
+  float kelembapan = dht.readHumidity();
+  float suhu = dht.readTemperature(); // Celcius
 
-  if(t < 32 || t > 36 || h < 50 || h > 70)
+  // Cek jika sensor gagal membaca
+  if (isnan(suhu) || isnan(kelembapan)) {
+    Serial.println("Gagal membaca sensor DHT11!");
     digitalWrite(BUZZER, HIGH);
-  else
+    delay(1000);
     digitalWrite(BUZZER, LOW);
+    delay(1000);
+    return;
+  }
 
+  // Tampilkan data
+  Serial.print("Suhu: ");
+  Serial.print(suhu);
+  Serial.print(" °C | Kelembapan: ");
+  Serial.print(kelembapan);
+  Serial.println(" %");
+
+  // Logika alarm inkubator bayi
+  if (suhu < 32 || suhu > 36 || kelembapan < 50 || kelembapan > 70) {
+    Serial.println("⚠️ PERINGATAN: Kondisi TIDAK AMAN!");
+    digitalWrite(BUZZER, HIGH);
+  } else {
+    Serial.println("✅ Kondisi AMAN");
+    digitalWrite(BUZZER, LOW);
+  }
+
+  Serial.println("----------------------------");
   delay(2000);
 }
 </pre>
