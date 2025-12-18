@@ -143,12 +143,59 @@
         <p>- Pastikan WSL versi 2:</p>
       <pre>wsl --set-default-version 2</pre>
   <p>3️⃣ Instalasi Ubuntu 24.04 LTS (OS Guest)</p>
+    <p>Ubuntu digunakan sebagai lingkungan Linux utama untuk ROS 2.</p>
+    <p>Langkah-langkah:</p>
+        <p>- Buka Microsoft Store</p>
+        <p>- Cari Ubuntu 24.04 LTS</p>
+        <p>- Install dan jalankan</p>
+        <p>- Buat username & password Linux</p>
   <p>4️⃣ Update Sistem Ubuntu</p>
+    <p>Ubuntu digunakan sebagai lingkungan Linux utama untuk ROS 2.</p>
+    <p>Kode:</p>
+        <pre>sudo apt update
+sudo apt upgrade -y</pre>
   <p>5️⃣ Instalasi ROS 2 Jazzy Jalisco</p>
+    <p>ROS 2 berfungsi sebagai middleware komunikasi.</p>
+    <p>Langkah-langkah:</p>
+        <p>- Tambahkan locale:</p>
+          <pre> sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8</pre>
+        <p>- Tambahkan repository ROS 2:</p>
+          <pre>sudo apt install software-properties-common
+sudo add-apt-repository universe</pre>
+        <p>- Install ROS 2 Jazzy:</p>
+          <pre>sudo apt update
+sudo apt install ros-jazzy-desktop -y</pre>
+        <p>- Setup environment:</p>
+          <pre>source /opt/ros/jazzy/setup.bash</pre>
   <p>6️⃣ Instalasi Docker Desktop</p>
+    <p>Docker digunakan untuk menjalankan micro-ros-agent secara terisolasi.</p>
+    <p>Langkah-langkah:</p>
+        <p>- Download Docker Desktop for Windows</p>
+        <p>- Install dan aktifkan:</p>
+          <pre>WSL 2 backend</pre>
+        <p>- Restart jika diminta</p>
   <p>7️⃣ Menjalankan micro-ros-agent (Docker)</p>
+    <p>Micro-ROS Agent berfungsi sebagai jembatan antara mikrokontroler dan ROS 2.</p>
+    <p>Jalankan container:</p>
+        <pre>docker run -it --rm \
+  --net=host \
+  microros/micro-ros-agent:jazzy \
+  serial --dev /dev/ttyUSB0 -b 115200</pre>
   <p>8️⃣ Instalasi Arduino IDE</p>
+    <p>Arduino IDE digunakan untuk pemrograman mikrokontroler.</p>
+    <p>Langkah-langkah:</p>
+        <p>- Download Arduino IDE</p>
+        <p>- Install di Windows</p>
+        <p>- Tambahkan board: Arduino Uno</p>
+        <p>- Install library: DHT sensor library by Adafruit</p>
   <p>9️⃣ Instalasi Python (untuk ROS 2 Node)</p>
+    <p>Python digunakan untuk membuat logic node, monitoring, dan otomasi.</p>
+    <p>Pastikan Python Terinstall</p>
+      <pre>python3 --version</pre>
+    <p>Jika belum:</p>
+      <pre>sudo apt install python3 python3-pip -y</pre>
     </ul>
   </div>
 </section>
