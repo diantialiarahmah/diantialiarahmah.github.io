@@ -84,25 +84,19 @@
   <h2>Arsitektur Sistem</h2>
   <div class="card">
     <ul>
-  <li><b>Mulai Sistem</b></li>
-  <li>Sensor DHT11 membaca suhu dan kelembapan inkubator</li>
-  <li>Arduino Uno menerima dan memproses data sensor</li>
-  <li>Analisis dan Threshold Check dilakukan</li>
-  <li>
-    Jika kondisi normal:
-    <ul>
-      <li>Buzzer mati</li>
-      <li>Sistem kembali ke proses monitoring</li>
+   <h2>Diagram Alir Sistem</h2>
+    <div style="background:#fff;padding:25px;border-radius:10px;
+              box-shadow:0 4px 10px rgba(0,0,0,0.1);
+              text-align:center;margin-top:20px;">
+      <img 
+      src="Diagram Robotikamedis.jpg"
+      alt="Diagram Alir Smart Incubator Monitoring System"
+      style="max-width:100%;height:auto;border:1px solid #ccc;border-radius:8px;"
+      >
+      <p style="margin-top:15px;font-size:14px;color:#555;">
+      Gambar 1. Diagram Alir Smart Incubator Monitoring System
+      </p>
     </ul>
-  </li>
-  <li>
-    Jika kondisi tidak normal:
-    <ul>
-      <li>Buzzer aktif sebagai alarm</li>
-      <li>Sistem kembali ke proses monitoring</li>
-    </ul>
-  </li>
-</ul>
     <p>📋 Alur Kerja Sistem</p>
     <ul>
       <li><b>Sensor DHT11</b> – Membaca suhu dan kelembapan inkubator</li>
