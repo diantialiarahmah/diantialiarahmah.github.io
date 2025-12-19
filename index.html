@@ -30,16 +30,20 @@
 </header>
 
 <nav>
+  <a href="#Tim Pengembang">TIm Pengembang</a>
   <a href="#tentang">Tentang</a>
   <a href="#penting">Pentingnya</a>
   <a href="#fitur">Fitur</a>
   <a href="#arsitektur">Arsitektur</a>
+  <a href="#Diagram Alir Sistem">Diagram Alir Sistem</a>
   <a href="#hardware">Hardware</a>
   <a href="#software">Software</a>
   <a href="#Environment Setup">Environment Setup</a>
   <a href="#Hardware Setup">Hardware Setup</a>
   <a href="#Arduino Programming">Arduino Programming</a>
-  <a href="#trouble">Troubleshooting</a>
+  <a href="#Implementasi Logic Node">Implementasi Logic Node</a>
+  <a href="#troubleshooting">Troubleshooting</a>
+  <a href="#Hardware Monitoring Sistem">Hardware Monitoring Sistem</a>
 </nav>
 
 <!DOCTYPE html>
@@ -234,29 +238,37 @@
   <p>1️⃣ Menyiapkan Sistem Operasi Utama (Windows 11)</p>
     <p>Windows 11 digunakan sebagai host system (sistem utama) untuk menjalankan seluruh pengembangan.</p>
     <p>Fungsi Utama:</p>
+      <ul>
         <p>- Menjalankan Arduino IDE</p>
         <p>- Menjalankan Docker Desktop</p>
         <p>- Menjalankan WSL 2 sebagai jembatan ke Linux</p>
+      </ul>
     <p>Pastikan</p>
+      <ul>
         <p>- Windows 11 sudah ter-update</p>
         <p>- Virtualization aktif di BIOS</p>
         <p>- RAM minimal 8 GB (disarankan)</p>
+        </ul>
   <p>2️⃣ Mengaktifkan WSL 2 (Windows Subsystem for Linux)</p>
     <p>WSL 2 memungkinkan kita menjalankan Linux langsung di dalam Windows tanpa dual boot.</p>
     <p>Langkah-langkah:</p>
+        <ul>
         <p>- Buka PowerShell (Run as Administrator)</p>
         <p>- Jalankan perintah:</p>
       <pre>wsl --install</pre>
         <p>- Restart komputer</p>
         <p>- Pastikan WSL versi 2:</p>
       <pre>wsl --set-default-version 2</pre>
+          </ul>
   <p>3️⃣ Instalasi Ubuntu 24.04 LTS (OS Guest)</p>
     <p>Ubuntu digunakan sebagai lingkungan Linux utama untuk ROS 2.</p>
     <p>Langkah-langkah:</p>
+          <ul>
         <p>- Buka Microsoft Store</p>
         <p>- Cari Ubuntu 24.04 LTS</p>
         <p>- Install dan jalankan</p>
         <p>- Buat username & password Linux</p>
+            </ul>
   <p>4️⃣ Update Sistem Ubuntu</p>
     <p>Ubuntu digunakan sebagai lingkungan Linux utama untuk ROS 2.</p>
     <p>Kode:</p>
@@ -265,6 +277,7 @@ sudo apt upgrade -y</pre>
   <p>5️⃣ Instalasi ROS 2 Jazzy Jalisco</p>
     <p>ROS 2 berfungsi sebagai middleware komunikasi.</p>
     <p>Langkah-langkah:</p>
+            <ul>
         <p>- Tambahkan locale:</p>
           <pre> sudo apt install locales
 sudo locale-gen en_US en_US.UTF-8
@@ -277,13 +290,16 @@ sudo add-apt-repository universe</pre>
 sudo apt install ros-jazzy-desktop -y</pre>
         <p>- Setup environment:</p>
           <pre>source /opt/ros/jazzy/setup.bash</pre>
+              </ul>
   <p>6️⃣ Instalasi Docker Desktop</p>
     <p>Docker digunakan untuk menjalankan micro-ros-agent secara terisolasi.</p>
     <p>Langkah-langkah:</p>
+      <ul>
         <p>- Download Docker Desktop for Windows</p>
         <p>- Install dan aktifkan:</p>
           <pre>WSL 2 backend</pre>
         <p>- Restart jika diminta</p>
+      </ul>
   <p>7️⃣ Menjalankan micro-ros-agent (Docker)</p>
     <p>Micro-ROS Agent berfungsi sebagai jembatan antara mikrokontroler dan ROS 2.</p>
     <p>Jalankan container:</p>
@@ -294,10 +310,12 @@ sudo apt install ros-jazzy-desktop -y</pre>
   <p>8️⃣ Instalasi Arduino IDE</p>
     <p>Arduino IDE digunakan untuk pemrograman mikrokontroler.</p>
     <p>Langkah-langkah:</p>
+      <ul>
         <p>- Download Arduino IDE</p>
         <p>- Install di Windows</p>
         <p>- Tambahkan board: Arduino Uno</p>
         <p>- Install library: DHT sensor library by Adafruit</p>
+        </ul>
   <p>9️⃣ Instalasi Python (untuk ROS 2 Node)</p>
     <p>Python digunakan untuk membuat logic node, monitoring, dan otomasi.</p>
     <p>Pastikan Python Terinstall</p>
@@ -671,7 +689,7 @@ source install/setup.bash</pre>
   </div>
 </section>
 
-  <section id="Hardware">
+  <section id="Hardware Monitoring Sistem">
   <h2>Hardware Monitoring Sistem</h2>
   <div class="card">
     <ul
